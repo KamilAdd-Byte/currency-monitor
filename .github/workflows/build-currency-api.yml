@@ -47,6 +47,8 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           STATUS=$([[ ${{ job.status }} == 'success' ]] && echo 'Succeeded' || echo 'Failed')
+          COMMIT_INFO=$(git log -1 --pretty=format:"%h - %an, %ae%nDate: %cd%n%s")
+          FILE_CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | wc -l)
           curl -H "Content-Type: application/json" \
-               -d "{\"content\": \"Build $STATUS: ${{ github.repository }}@${{ github.ref }} Commit: ${{ github.sha }} by ${{ github.actor }}\"}" \
+               -d "{\"content\": \"Build $STATUS: ${{ github.repository }}@${{ github.ref }} Commit: ${{ github.sha }} by ${{ github.actor }}\nCommit info:\n$COMMIT_INFO\nChanged files: $FILE_CHANGES\"}" \
                $DISCORD_WEBHOOK_URL
