@@ -16,15 +16,6 @@ services:
     image: docker.io/bitnami/keycloak:24
     depends_on:
       - postgresql
-    environment:
-      KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-      KEYCLOAK_DATABASE_HOST: postgres
-      KEYCLOAK_DATABASE_PORT: 5432
-      KEYCLOAK_DATABASE_NAME: keycloak
-      KEYCLOAK_DATABASE_USER: keycloak
-      KEYCLOAK_DATABASE_PASSWORD: keycloak
-      KEYCLOAK_EXTRA_ARGS: --import-realm
     ports:
       - "8080:8080"
 
