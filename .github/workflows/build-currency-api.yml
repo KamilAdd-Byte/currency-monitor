@@ -47,7 +47,6 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           STATUS=$([[ ${{ job.status }} == 'success' ]] && echo 'Succeeded' || echo 'Failed')
-          COMMIT_INFO=$(git log -1 --pretty=format:"%h - %an, %ae%nDate: %cd%n%s")
           curl -H "Content-Type: application/json" \
                -d "$ENCODED_MESSAGE" \
                $DISCORD_WEBHOOK_URL
