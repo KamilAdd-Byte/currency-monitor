@@ -10,7 +10,6 @@ import com.currency.monitor.scrapp.currency.service.CurrencyCodesService;
 import com.currency.monitor.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +17,7 @@ import java.util.Set;
 public class CurrencyServiceImpl implements CurrencyService {
 
     private final CurrencyWebMapper currencyWebMapper;
+
     @Autowired
     private CurrencyCodesService codesService;
 

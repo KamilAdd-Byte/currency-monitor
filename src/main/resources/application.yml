@@ -38,3 +38,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/CurrencySpringKeycloak
+
+currency-url:
+    basic-gold: https://api.nbp.pl/api/cenyzlota/last/30/?format=json

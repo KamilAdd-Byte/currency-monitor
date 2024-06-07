@@ -5,9 +5,11 @@ import com.currency.monitor.api.model.websideline.WebSideLine;
 import com.currency.monitor.api.response.CurrencyCodeResponse;
 import com.currency.monitor.api.response.CurrencyResponse;
 import com.currency.monitor.nbp.dto.CurrencyDto;
-import com.currency.monitor.service.CurrencyService;
+import com.currency.monitor.service.impl.CurrencyServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/v1")
-@Tag(name = "Currency API", description = "Services for currencies. Get currency from nbp.api or data from scrap")
+@Tag(name = "Currency monitor API", description = "Services for currencies. Get currency from nbp.api or data from scrap")
 public class CurrencyController {
 
-    @Autowired
-    private CurrencyService service;
+    private final CurrencyServiceImpl service;
+
 
     @GetMapping(path = "/codes")
     @Operation(summary = "Get all codes")
@@ -43,7 +46,6 @@ public class CurrencyController {
         Set<CurrencyExchangeDto> currencyExchangeDtos = service.currencyExchangeDtos();
         return new ResponseEntity<>(new CurrencyCodeResponse(id, requestDate, currencyExchangeDtos), HttpStatus.OK);
     }
-
 
     @GetMapping(path = "/{code}/{table}/{date}")
     @Operation(description = "Get rates for currency by code, table and date")

@@ -3,6 +3,7 @@ package com.currency.monitor.nbp.mapper.impl;
 import com.currency.monitor.nbp.dto.CurrencyDto;
 import com.currency.monitor.nbp.mapper.CurrencyWebMapper;
 import com.currency.monitor.nbp.model.CurrencyNbpExternalModel;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -12,24 +13,14 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class CurrencyWebMapperImpl implements CurrencyWebMapper {
     //url model: https://api.nbp.pl/api/exchangerates/rates/A/USD/last/10
     private static final String BASIC_NBP_URL = "https://api.nbp.pl/api/exchangerates/rates/";
     private static final String TABLE_A = "/A/";
     private static final String LAST_TOP_10 = "/last/10";
 
-    private static CurrencyWebMapperImpl instance;
     private final RestTemplate restTemplate = new RestTemplate();
-
-    private CurrencyWebMapperImpl() {
-    }
-
-    public static CurrencyWebMapperImpl getInstance() {
-        if (instance == null) {
-            instance = new CurrencyWebMapperImpl();
-        }
-        return instance;
-    }
 
     /**
      * @param code are the three characters that make up the currency code standard ISO 4217

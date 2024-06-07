@@ -1,10 +1,10 @@
 package com.currency.monitor.nbp.model;
 
 import com.currency.monitor.nbp.dto.RatesDto;
-import lombok.Getter;
+import lombok.Data;
 import java.util.List;
 
-@Getter
+@Data
 public class CurrencyNbpExternalModel {
     private String table;
     private String currency;

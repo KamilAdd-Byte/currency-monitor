@@ -3,7 +3,6 @@ package com.currency.monitor.service;
 import com.currency.monitor.api.model.dto.CurrencyExchangeDto;
 import com.currency.monitor.api.model.websideline.WebSideLine;
 import com.currency.monitor.nbp.dto.CurrencyDto;
-
 import java.util.List;
 import java.util.Set;
 
