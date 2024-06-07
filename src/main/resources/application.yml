@@ -1,0 +1,9 @@
+server:
+    port: 9080
+
+spring:
+  datasource:
+     username: postgres
+     password: postgres
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:2011/currency
