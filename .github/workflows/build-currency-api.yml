@@ -16,25 +16,37 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        cache: maven
-        
-    - name: Build with Maven
-      run: mvn clean install
-      
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v2
-      with:
-       name: java-app
-       path: ‘${{ github.workspace }}/target/*.jar’
-       
-    - name: Run Tests
-      run: mvn test  
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Run Tests
+        run: mvn test
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: java-app
+          path: ${{ github.workspace }}/target/*.jar
+
+      - name: Notify on Discord
+        if: always()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          STATUS=$([[ ${{ job.status }} == 'success' ]] && echo 'Succeeded' || echo 'Failed')
+          curl -H "Content-Type: application/json" \
+               -d "{\"content\": \"Build $STATUS: ${{ github.repository }}@${{ github.ref }} Commit: ${{ github.sha }} by ${{ github.actor }}\"}" \
+               $DISCORD_WEBHOOK_URL
