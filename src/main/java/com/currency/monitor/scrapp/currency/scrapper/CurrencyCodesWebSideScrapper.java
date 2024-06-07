@@ -18,6 +18,7 @@ import java.util.List;
  * @apiNote The responsibility of the class is to obtain a WebSideLine in the form of a string based
  * on the provided jsoup document
  */
+@Getter
 @Slf4j
 public class CurrencyCodesWebSideScrapper extends WebSideScrapper {
 
@@ -25,7 +26,6 @@ public class CurrencyCodesWebSideScrapper extends WebSideScrapper {
     private static final String ELEMENT_BY_CLASS = "table table-bordered downloads tablesorter";
     private static final String ELEMENT_BY_TAG = "p";
 
-    @Getter
     private List<WebSideLine> webSideLines;
 
 
