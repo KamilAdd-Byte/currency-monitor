@@ -48,5 +48,5 @@ jobs:
         run: |
           STATUS=$([[ ${{ job.status }} == 'success' ]] && echo 'Succeeded' || echo 'Failed')
           curl -H "Content-Type: application/json" \
-               -d "$ENCODED_MESSAGE" \
+               -d "{\"content\": \"Build $STATUS: ${{ github.repository }}@${{ github.ref }} Commit: ${{ github.sha }} by ${{ github.actor }}\"}" \
                $DISCORD_WEBHOOK_URL
