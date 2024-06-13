@@ -15,16 +15,13 @@ import java.nio.file.Paths;
 public class CSVExportProcessor {
 
     public static void printValueGoldToCsv(GoldDto[] goldResult, OutputStream outputStream) throws IOException {
-        CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(GoldDto.class).withHeader();
-        ObjectWriter writer = mapper.writer(schema);
+        ObjectWriter writer = getObjectWriter();
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
             writer.writeValues(bufferedWriter).writeAll(goldResult);
         }
     }
 
-    //Use for another commit
     private static ObjectWriter getObjectWriter() {
         CsvMapper mapperCsv = new CsvMapper();
         mapperCsv.enable(CsvParser.Feature.EMPTY_STRING_AS_NULL);

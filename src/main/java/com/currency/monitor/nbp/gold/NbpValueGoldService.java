@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,5 +31,12 @@ public class NbpValueGoldService {
 
     public GoldDto[] getTeenGoldResult() {
         return restTemplate.getForObject(goldApiUrl, GoldDto[].class);
+    }
+
+    public ByteArrayOutputStream getCsvFile() throws IOException {
+        GoldDto[] goldData = getTeenGoldResult();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CSVExportProcessor.printValueGoldToCsv(goldData, outputStream);
+        return outputStream;
     }
 }

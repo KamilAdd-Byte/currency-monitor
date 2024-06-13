@@ -35,15 +35,13 @@ public class GoldController {
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadCsv() {
         try {
-            GoldDto[] goldData = goldService.getTeenGoldResult();
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            CSVExportProcessor.printValueGoldToCsv(goldData, outputStream);
+            ByteArrayOutputStream csvFile = goldService.getCsvFile();
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=gold.csv");
             headers.add(HttpHeaders.CONTENT_TYPE, "text/csv");
 
-            return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+            return new ResponseEntity<>(csvFile.toByteArray(), headers, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
